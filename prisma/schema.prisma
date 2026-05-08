@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  pairCode     String    @unique @default(cuid())
+  createdAt    DateTime  @default(now())
+
+  coupleAsA    Couple?   @relation("PartnerA")
+  coupleAsB    Couple?   @relation("PartnerB")
+  messages     Message[]
+}
+
+model Couple {
+  id         String    @id @default(cuid())
+  partnerA   User      @relation("PartnerA", fields: [partnerAId], references: [id])
+  partnerAId String    @unique
+  partnerB   User      @relation("PartnerB", fields: [partnerBId], references: [id])
+  partnerBId String    @unique
+  createdAt  DateTime  @default(now())
+  isActive   Boolean   @default(true)
+
+  messages   Message[]
+  exercises  Exercise[]
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  couple     Couple   @relation(fields: [coupleId], references: [id])
+  coupleId   String
+  sender     User?    @relation(fields: [senderId], references: [id])
+  senderId   String?
+  senderRole SenderRole
+  content    String
+  flagged    Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  @@index([coupleId, createdAt])
+  @@index([coupleId, senderRole])
+}
+
+model Exercise {
+  id         String         @id @default(cuid())
+  couple     Couple         @relation(fields: [coupleId], references: [id])
+  coupleId   String
+  title      String
+  prompt     String
+  category   ExerciseCategory
+  status     ExerciseStatus @default(SUGGESTED)
+  createdAt  DateTime       @default(now())
+
+  @@index([coupleId])
+}
+
+enum SenderRole {
+  PARTNER_A
+  PARTNER_B
+  AI_TO_A
+  AI_TO_B
+}
+
+enum ExerciseCategory {
+  COMMUNICATION
+  GRATITUDE
+  CONFLICT_RESOLUTION
+  EMPATHY
+  BONDING
+  WEEKLY_CHECKIN
+}
+
+enum ExerciseStatus {
+  SUGGESTED
+  ACCEPTED
+  COMPLETED
+  SKIPPED
+}
