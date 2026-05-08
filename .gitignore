@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+BOT_TOKEN/
+
+# Runtime output
+*.log
+logs/
+uploads/
+
+# Local tools and binaries
+*.exe
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
