@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CoupleConnect
 
-## Getting Started
+AI-powered couples therapy chatbot built with Next.js. CoupleConnect gives each partner a private space to talk with an AI counselor, pair with their partner, and access guided relationship exercises focused on communication, empathy, and conflict resolution.
 
-First, run the development server:
+## Demo
+
+Live demo: Not deployed yet.
+
+Local demo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- User signup and login with NextAuth credentials.
+- Partner pairing through unique pair codes.
+- Private AI counselor chat for each partner.
+- Message history stored per couple.
+- Safety checks for crisis, abuse, and self-harm related content.
+- Guided relationship exercises by category.
+- Dashboard for pairing status, navigation, and account actions.
+- PostgreSQL database schema managed with Prisma.
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- Next.js 16
+- React 19
+- NextAuth.js
+- Prisma ORM
+- PostgreSQL
+- Azure OpenAI / OpenAI SDK
+- bcryptjs
+- ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Clone the repository:
 
-## Deploy on Vercel
+```bash
+git clone https://github.com/shubham-pasricha1096/couples_therapy_chatbot.git
+cd couples_therapy_chatbot
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Install dependencies:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm install
+```
+
+Generate the Prisma client:
+
+```bash
+npx prisma generate
+```
+
+Apply database migrations or push the Prisma schema:
+
+```bash
+npx prisma db push
+```
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+## Environment Variables
+
+Create a `.env.local` file in the project root and add:
+
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@HOST:PORT/DATABASE"
+NEXTAUTH_SECRET="your-nextauth-secret"
+NEXTAUTH_URL="http://localhost:3000"
+
+AZURE_OPENAI_API_KEY="your-azure-openai-api-key"
+AZURE_OPENAI_ENDPOINT="https://your-resource-name.openai.azure.com"
+AZURE_OPENAI_API_VERSION="2024-08-01-preview"
+AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o-mini"
+```
+
+`AZURE_OPENAI_API_VERSION` and `AZURE_OPENAI_DEPLOYMENT_NAME` have defaults in code, but setting them explicitly is recommended.
+
+## Usage
+
+1. Run `npm run dev`.
+2. Open `http://localhost:3000`.
+3. Create an account or log in.
+4. Share your pair code with your partner, or enter your partner's pair code.
+5. After pairing, open the chat page to talk with the AI counselor.
+6. Use the exercises page for guided relationship activities.
+
+Available scripts:
+
+```bash
+npm run dev
+npm run build
+npm run start
+npm run lint
+```
+
+## TODO
+
+- Deploy the app to a production hosting provider.
+- Add a production migration workflow for Prisma.
+- Add automated tests for auth, pairing, chat, and safety flows.
+- Improve exercise completion tracking in the UI.
+- Add rate limiting and monitoring for production API routes.
+- Add a formal privacy policy and crisis resource page.
