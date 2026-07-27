@@ -1,0 +1,62 @@
+To run the refactored Couples Therapy Chatbot, follow these exact steps in your terminal.
+
+  1. Prerequisites
+  Ensure you have the following installed and running on your machine:
+   * Node.js (v18 or higher)
+   * PostgreSQL (with the pgvector extension installed)
+   * Redis Server
+
+  2. Environment Configuration
+  Create a .env file in the root directory and fill in your credentials (use .env.example as a template):
+
+    1 # Server
+    2 PORT=3000
+    3 WEBHOOK_URL=your_ngrok_or_public_url
+    4
+    5 # Telegram
+    6 TELEGRAM_BOT_TOKEN=your_bot_token
+    7 BOT_USERNAME=your_bot_username
+    8
+    9 # AI
+   10 OPENROUTER_API_KEY=your_openrouter_key
+   11
+   12 # Database
+   13 DATABASE_URL=postgresql://user:password@localhost:5432/couples_ai
+   14 REDIS_URL=redis://localhost:6379
+   15
+   16 # Security
+   17 MESSAGE_SECRET=your_random_secret_string
+
+  3. Install Dependencies
+  Install the required Node.js packages:
+   1 npm install
+
+  4. Initialize Database Schema
+  Run the setup script to enable pgvector, create the necessary tables, and set up the relationships/messages schema:
+   1 node scripts/setup-db.js
+
+  5. Build and Run
+  You can run the project in development mode (with auto-reload) or production mode:
+
+  Development Mode:
+   1 npm run dev
+
+  Production Mode:
+
+   1 npm run build
+   2 npm start
+
+  6. Verification (Optional but Recommended)
+  To ensure the safety and encryption modules are working correctly, run the test suite:
+   1 npm test
+
+  Summary of Commands
+  ┌────────────┬──────────────────────────────┐
+  │ Action     │ Command                      │
+  ├────────────┼──────────────────────────────┤
+  │ Setup      │ npm install                  │
+  │ Database   │ node scripts/setup-db.js     │
+  │ Test       │ npm test                     │
+  │ Run (Dev)  │ npm run dev                  │
+  │ Run (Prod) │ npm run build then npm start │
+  └────────────┴──────────────────────────────┘

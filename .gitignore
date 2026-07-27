@@ -35,7 +35,6 @@ yarn-error.log*
 
 # local notes, secrets, and archive artifacts
 /BOT_TOKEN/
-/couples-chatbot-complete-code/
 /couples-chatbot-complete-code.zip
 
 # vercel
